@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE-edge"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="font-['Poppins'] bg-amber-100" onload="hideCamera()">
+  <div class="w-full bg-stone-800 p-2">
+    <a href="/" class="flex gap-2">
+      <svg class="mb-1" fill="#fff" height="40" width="40" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232 232" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 232 232">
+        <g>
+          <path d="m116,0c-64.065,0-116,51.935-116,116s51.935,116 116,116 116-51.935 116-116-51.935-116-116-116zm-73.75,149.5c-13.669,0-24.75-11.081-24.75-24.75s11.081-24.75 24.75-24.75 24.75,11.081 24.75,24.75-11.081,24.75-24.75,24.75zm32.5,49c-4.557,0-8.25-3.693-8.25-8.25s3.693-8.25 8.25-8.25 8.25,3.693 8.25,8.25-3.693,8.25-8.25,8.25zm8.75-116c-9.112,0-16.5-7.387-16.5-16.5s7.388-16.5 16.5-16.5 16.5,7.387 16.5,16.5-7.388,16.5-16.5,16.5zm57.25-49c4.557,0 8.25,3.693 8.25,8.25s-3.693,8.25-8.25,8.25-8.25-3.693-8.25-8.25 3.693-8.25 8.25-8.25zm-8.25,165c-9.112,0-16.5-7.387-16.5-16.5s7.388-16.5 16.5-16.5 16.5,7.387 16.5,16.5-7.388,16.5-16.5,16.5zm.5-66c-9.112,0-16.5-7.387-16.5-16.5s7.388-16.5 16.5-16.5 16.5,7.387 16.5,16.5-7.388,16.5-16.5,16.5zm48.75-50c-4.557,0-8.25-3.693-8.25-8.25s3.693-8.25 8.25-8.25 8.25,3.693 8.25,8.25-3.693,8.25-8.25,8.25zm25,50c-4.557,0-8.25-3.693-8.25-8.25 0-4.557 3.693-8.25 8.25-8.25s8.25,3.693 8.25,8.25c0,4.557-3.693,8.25-8.25,8.25z"/>
+        </g>
+      </svg>
+      <p class="text-4xl text-white font-bold">Cookipedia</p>
+    </a>
+  </div>
+  <div class="p-5 font-semibold flex justify-center">
+    <p>Coloca tu galleta frente a la cámara para que podamos reconocer su tipo y proporcionarte información relevante sobre ella.</p>
+  </div>  
+  <div align="center" class="bg-stone-800 w-full grid grid-cols-1 md:grid-cols-2 items-stretch">
+    <div align="center" class="w-full">
+        <div>
+          <div class="m-10 p-5 bg-stone-900 rounded-xl" id="cam" style="display: none;">
+            <img src="{{url_for('/.video')}}" class="rounded-lg"></img>
+          </div>
+          <div class="py-5" id="loader" style="display: none;">
+            <div class="loader">
+            <br/>
+          </div>
+        </div> 
+      </div>  
+    </div>
+    <div">
+      <div id="info" style="display:none;" class="w-full px-10 pt-10">
+        <div class="w-full p-5 bg-white rounded-lg">
+          <div class="flex py-2 gap-2 text-xl">
+            <p class="font-bold">Nombre: </p>
+            <p id="name">{{cookie.name}}</p>
+          </div>
+          <hr/>
+          <div class="flex py-2 gap-2">
+            <p class="font-bold">Descripcion: </p>
+            <p id="description" class="text-justify"></p>
+          </div>
+          <hr/>
+          <div class="flex py-2 gap-2">
+            <p class="font-bold">Azucar: </p>
+            <p id="sugar"></p>
+          </div>
+          <hr/>
+          <div class="flex py-2 gap-2">
+            <p class="font-bold">Grasas: </p>
+            <p id="fat"></p>
+          </div>
+          <hr/>
+          <div class="text-justify flex py-2 text-sm text-slate-500">
+            <p>Esta galleta esta dirigida principalmente a personas que sufren de <b id="for"></b>.
+              No obstante, primero consulte con un medico.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="info2" style="display:none;" class="w-full px-10 pt-5 pb-10">
+        <div class="w-full p-5 bg-stone-700 rounded-lg text-white">
+          <div class="flex py-2 gap-2">
+            <p class="font-bold">Porcentaje: </p>
+            <p id="percen"></p>
+          </div>
+          <hr class="border-stone-600"/>
+          <div class="flex py-2 gap-2">
+            <p class="font-bold">Procesamiento: </p>
+            <p id="time_pros"></p>
+          </div>
+          <hr class="border-stone-600"/>
+          <div class="flex py-2 gap-2">
+            <p class="font-bold">Predicción: </p>
+            <p id="time_pred"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p-5 font-semibold flex justify-center">
+    <a href="/">
+      <button class="text-xl button p-3 rounded-xl bg-stone-800 text-white">Volver</button>
+    </a>
+  </div>
+  <script>
+    const hideCamera = () =>{
+      document.getElementById("cam").style.display = "none"
+    }
+
+    const getData = async () =>{
+      var url = "{{ url_for('/.data') }}";
+      const name = document.getElementById("name");
+      fetch(url)
+              .then(response => response.json())  // Convertir la respuesta a texto
+              .then(data => {
+                  console.log(data)
+                  name.innerText = data["cookie"]["name"];
+                  document.getElementById("sugar").innerText = data["cookie"]["sugar"];
+                  document.getElementById("fat").innerText = data["cookie"]["fat"];
+                  document.getElementById("for").innerText = data["cookie"]["for"];
+                  document.getElementById("description").innerText = data["cookie"]["description"];
+                  document.getElementById("time_pred").innerText = data["predictor"]["time_pred"];
+                  document.getElementById("time_pros").innerText = data["predictor"]["time_pros"];
+                  document.getElementById("percen").innerText = data["predictor"]["percent"];
+
+                  if(data["cookie"]["name"] == ""){
+                    document.getElementById("loader").style.display = "block";
+                  }else{
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("info").style.display = "block";
+                    document.getElementById("info2").style.display = "block";
+                    document.getElementById("cam").style.display = "block";
+                  }
+              })
+              .catch(error => console.error('Error:', error));
+            }
+    setInterval(getData, 400);
+  </script>
+</body>
+</html>

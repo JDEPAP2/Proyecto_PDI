@@ -1,0 +1,7 @@
+{
+    "name":["Chocolate", "M & M", "Red Velvet"],
+    "description":["Galleta hecha con harina, mantequilla cacao en polvo y chocolate amargo", "Galleta con harina, mantequilla y chocolates de colores", "Galleta hecha con harina, mantequilla cacao en polvo, colorante artificial y chocolate blanco"],
+    "sugar": ["18g", "20g", "21g"],
+    "fat": ["8%","10%","12%"],
+    "for": ["Diabetes", "Hipoglucemia", "Prediabetes"]
+}

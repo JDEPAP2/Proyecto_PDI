@@ -3,7 +3,7 @@ import numpy as np
 from threading import Thread
 
 directory = os.path.dirname(__file__)
-path = os.path.join(directory, 'modelo.h5')
+path = os.path.join(directory, 'modeloOrg.h5')
 
 
 class Predictor:
@@ -18,7 +18,8 @@ class Predictor:
         while True:
             start = time.time()
             success, frame = cap.read()
-            frame = cv2.convertScaleAbs(frame,alpha=1.2,beta=-20)
+            frame = cv2.convertScaleAbs(frame,alpha=1.5,beta=-20)
+            frame[:,:,0] = cv2.equalizeHist(frame[:,:,0])
             if not success:
                 break
             ret, buffer = cv2.imencode('.jpg', frame)
@@ -43,6 +44,7 @@ class Predictor:
                     
     def predict(self, frame):
         img = cv2.resize(frame,(224,224))
+        img = img/255
         start = time.time()
         y_predict = self.model.predict([np.expand_dims(img, axis=0)])
         self.time_predict = time.time() - start

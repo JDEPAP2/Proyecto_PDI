@@ -35,14 +35,15 @@ class Predictor:
             
             self.time_pross = time.time() - start
             yield (b'--frame\r\n'
-                            b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
+                    b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
 
     def callThread(self):
-        start = time.time()
         self.label, self.percent = self.predict(self.frame)
-        self.time_predict = time.time() - start
+
                     
     def predict(self, frame):
-        img = cv2.resize(frame,(128,128))
+        img = cv2.resize(frame,(224,224))
+        start = time.time()
         y_predict = self.model.predict([np.expand_dims(img, axis=0)])
+        self.time_predict = time.time() - start
         return np.argmax(y_predict), np.max(y_predict)

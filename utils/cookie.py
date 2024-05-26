@@ -3,7 +3,9 @@ import json,os
 directory = os.path.dirname(__file__)
 path = os.path.join(directory, "info.json")
 
-with open(path) as file:
+
+
+with open(path,encoding='utf8') as file:
     info = json.load(file)
 
 

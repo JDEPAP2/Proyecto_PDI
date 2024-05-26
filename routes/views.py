@@ -36,5 +36,5 @@ def data():
             "fat":cookie.fat,
             "for":cookie.forP
         }
-    })
+    }).encode('utf8')
     # return Response(predictor.getLabel(), mimetype='text/plain')

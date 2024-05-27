@@ -14,7 +14,7 @@ class Predictor:
     frame = []
 
     def main(self):
-        cap = cv2.VideoCapture(1)
+        cap = cv2.VideoCapture(0)
         while True:
             start = time.time()
             success, frame = cap.read()
